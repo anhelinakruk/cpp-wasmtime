@@ -35,25 +35,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("{} + {} = {}", a, b, result);
     }
 
-    // 6. Sprawdź inne eksportowane funkcje (opcjonalne)
-    println!("\n=== Dostępne eksporty ===");
-    for export in instance.exports(&mut store) {
-        match export.clone().into_extern() {
-            Extern::Func(_) => println!("📦 Funkcja: {}", export.name()),
-            Extern::Memory(_) => println!("🧠 Memory: {}", export.name()),
-            Extern::Table(_) => println!("📋 Table: {}", export.name()),
-            Extern::Global(_) => println!("🌍 Global: {}", export.name()),
-            Extern::SharedMemory(_) => println!("🔗 Shared Memory: {}", export.name()),
-            Extern::Tag(_) => println!("🏷️ Tag: {}", export.name()),
-        }
-    }
-
-    // 7. Sprawdź memory (opcjonalne)
-    if let Some(memory) = instance.get_memory(&mut store, "memory") {
-        let size = memory.size(&store);
-        println!("\n🧠 WASM Memory: {} stron ({} bytes)", size, size * 65536);
-    }
-
     println!("\n✅ Wszystko działa!");
     Ok(())
 }
